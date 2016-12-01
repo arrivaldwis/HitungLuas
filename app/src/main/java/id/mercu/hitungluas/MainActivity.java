@@ -4,16 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Animation.AnimationListener {
     EditText etPanjang;
     EditText etLebar;
     TextView tvHasil;
+    Animation animFadein;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
         etLebar = (EditText) findViewById(R.id.etLebar);
         //tvHasil = (TextView) findViewById(R.id.tvHasil);
         Button btnHitung = (Button) findViewById(R.id.btnHitung);
+
+        animFadein = AnimationUtils.loadAnimation(this,
+                R.anim.fade_in);
+
+        // set animation listener
+        animFadein.setAnimationListener(this);
+        btnHitung.setAnimation(animFadein);
 
         btnHitung.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +53,28 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        // Take any action after completing the animation
+
+        // check for fade in animation
+        if (animation == animFadein) {
+        }
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+        // TODO Auto-generated method stub
+
     }
 
     private double hitungLuasPersegi(double panjang, double lebar) {
